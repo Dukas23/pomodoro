@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pomodoro/enums/pomodoro_type.dart';
 import 'package:pomodoro/widgets/circular_progress_with_contex.dart';
-import 'package:flutter_beep/flutter_beep.dart';
 
 class PomodoroScreen extends StatefulWidget {
   const PomodoroScreen({super.key});
@@ -51,21 +50,21 @@ class PomodoroScreenState extends State<PomodoroScreen> {
         // Aquí podrías cambiar a shortBreak o longBreak según la lógica de tu app
         _currentPomodoroType = PomodoroType.shortBreak;
         _seconds = 300; // Tiempo para el descanso corto
-        FlutterBeep.beep();
+
         break;
       case PomodoroType.shortBreak:
         // Lógica cuando termina el descanso corto
         print('¡Descanso corto terminado!');
         _currentPomodoroType = PomodoroType.working;
         _seconds = 1500; // Volver al tiempo de trabajo
-        FlutterBeep.beep();
+
         break;
       case PomodoroType.longBreak:
         // Lógica cuando termina el descanso largo
         print('¡Descanso largo terminado!');
         _currentPomodoroType = PomodoroType.working;
         _seconds = 1500; // Volver al tiempo de trabajo
-        FlutterBeep.beep();
+
         break;
     }
     _isActive = false;
