@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pomodoro/promodor_screen.dart';
+import 'package:pomodoro/theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: AppTheme.lightTheme,
       home: const PomodoroScreen(),
     );
   }

@@ -16,6 +16,11 @@ class PomodoroScreenState extends State<PomodoroScreen> {
   int _seconds = 1500;
   bool _isActive = false;
   Timer? _timer;
+
+  // Getters públicos para pruebas
+  int get seconds => _seconds;
+  bool get isActive => _isActive;
+  PomodoroType get currentPomodoroType => _currentPomodoroType;
   void _toggleTimer() {
     setState(() {
       _isActive = !_isActive;
@@ -46,7 +51,6 @@ class PomodoroScreenState extends State<PomodoroScreen> {
     switch (_currentPomodoroType) {
       case PomodoroType.working:
         // Lógica cuando termina el tiempo de trabajo
-        print('¡Tiempo de trabajo terminado!');
         // Aquí podrías cambiar a shortBreak o longBreak según la lógica de tu app
         _currentPomodoroType = PomodoroType.shortBreak;
         _seconds = 300; // Tiempo para el descanso corto
@@ -54,14 +58,12 @@ class PomodoroScreenState extends State<PomodoroScreen> {
         break;
       case PomodoroType.shortBreak:
         // Lógica cuando termina el descanso corto
-        print('¡Descanso corto terminado!');
         _currentPomodoroType = PomodoroType.working;
         _seconds = 1500; // Volver al tiempo de trabajo
 
         break;
       case PomodoroType.longBreak:
         // Lógica cuando termina el descanso largo
-        print('¡Descanso largo terminado!');
         _currentPomodoroType = PomodoroType.working;
         _seconds = 1500; // Volver al tiempo de trabajo
 
@@ -80,7 +82,10 @@ class PomodoroScreenState extends State<PomodoroScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Tiempo: ${_currentPomodoroType.name.toUpperCase()}'),
+            Text(
+              _currentPomodoroType.name.toUpperCase(),
+              style: TextStyle(fontWeight: FontWeight.w900),
+            ),
 
             SizedBox(height: 20.0),
 
@@ -88,9 +93,10 @@ class PomodoroScreenState extends State<PomodoroScreen> {
               value: _seconds / 1500,
               text: Text(
                 '${(_seconds ~/ 60).toString().padLeft(2, '0')}:${(_seconds % 60).toString().padLeft(2, '0')}',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               strokeWidth: 10.0,
-              size: 150.0,
+              size: 300.0,
             ),
 
             SizedBox(height: 10.0),
