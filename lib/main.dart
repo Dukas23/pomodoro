@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro/promodor_screen.dart';
+import 'package:pomodoro/screens/promodor_screen.dart';
 import 'package:pomodoro/theme/app_theme.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Pomodoro timer',
       theme: AppTheme.lightTheme,
       home: const PomodoroScreen(),
     );
