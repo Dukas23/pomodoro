@@ -1,15 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pomodoro/enums/pomodoro_type.dart';
 import 'package:pomodoro/screens/promodor_screen.dart';
+import 'package:pomodoro/timer/pomodoro_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:pomodoro/widgets/circular_progress_with_contex.dart';
 
 void main() {
-  group('PomodoroScreenState', () {
-    late PomodoroScreenState pomodoroScreenState;
+  group('PomodoroTimer', () {
+    late PomodoroTimer pomodoroTimer;
 
     setUp(() {
-      pomodoroScreenState = PomodoroScreenState();
+      pomodoroTimer = PomodoroTimer();
     });
 
     group('PomodoroScreen Widget', () {
@@ -57,58 +58,54 @@ void main() {
 
     //Unit test
     test('El estado inicial es trabajando con 1500 segundos e inactivo', () {
-      expect(pomodoroScreenState.currentPomodoroType, PomodoroType.working);
-      expect(pomodoroScreenState.seconds, 1500);
-      expect(pomodoroScreenState.isActive, false);
+      expect(pomodoroTimer.currentType, PomodoroType.working);
+      expect(pomodoroTimer.seconds, 1500);
+      expect(pomodoroTimer.isActive, false);
     });
 
     test(
       'Al iniciar el temporizador, isActive cambia a verdadero y los segundos disminuyen',
       () async {
-        pomodoroScreenState.toggleTimer();
-        expect(pomodoroScreenState.isActive, true);
-        // Esperar un breve momento para que los segundos disminuyan
+        pomodoroTimer.toggle();
+        expect(pomodoroTimer.isActive, true);
         await Future.delayed(const Duration(milliseconds: 1100));
-        expect(pomodoroScreenState.seconds, lessThan(1500));
-        pomodoroScreenState
-            .toggleTimer(); // Detener el temporizador para no interferir con otras pruebas
+        expect(pomodoroTimer.seconds, lessThan(1500));
+        pomodoroTimer
+            .toggle(); // Detener el temporizador para no interferir con otras pruebas
       },
     );
 
     test('Al pausar el temporizador, isActive cambia a falso', () {
-      pomodoroScreenState.toggleTimer();
-      pomodoroScreenState.toggleTimer();
-      expect(pomodoroScreenState.isActive, false);
+      pomodoroTimer.toggle();
+      pomodoroTimer.toggle();
+      expect(pomodoroTimer.isActive, false);
     });
 
     test(
       'Al finalizar el tiempo de trabajo, cambia a descanso corto',
       () async {
-        pomodoroScreenState.getSeconds =
+        pomodoroTimer.seconds =
             1; // Establecer segundos a 1 para una prueba rápida
-        pomodoroScreenState.startTimer();
+        pomodoroTimer.start();
         await Future.delayed(const Duration(milliseconds: 1100));
-        expect(
-          pomodoroScreenState.currentPomodoroType,
-          PomodoroType.shortBreak,
-        );
-        expect(pomodoroScreenState.seconds, 300);
-        expect(pomodoroScreenState.isActive, false);
-        expect(pomodoroScreenState.timer, isNull);
+        expect(pomodoroTimer.currentType, PomodoroType.shortBreak);
+        expect(pomodoroTimer.seconds, 300);
+        expect(pomodoroTimer.isActive, false);
+        expect(pomodoroTimer.timer, isNull);
       },
     );
 
     test(
       'Al finalizar el descanso corto, vuelve a tiempo de trabajo',
       () async {
-        pomodoroScreenState.getCurrentPomodoroType = PomodoroType.shortBreak;
-        pomodoroScreenState.getSeconds = 1;
-        pomodoroScreenState.startTimer();
+        pomodoroTimer.currentType = PomodoroType.shortBreak;
+        pomodoroTimer.seconds = 1;
+        pomodoroTimer.start();
         await Future.delayed(const Duration(milliseconds: 1100));
-        expect(pomodoroScreenState.currentPomodoroType, PomodoroType.working);
-        expect(pomodoroScreenState.seconds, 1500);
-        expect(pomodoroScreenState.isActive, false);
-        expect(pomodoroScreenState.timer, isNull);
+        expect(pomodoroTimer.currentType, PomodoroType.working);
+        expect(pomodoroTimer.seconds, 1500);
+        expect(pomodoroTimer.isActive, false);
+        expect(pomodoroTimer.timer, isNull);
       },
     );
 
