@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro/screens/promodor_screen.dart';
-import 'package:pomodoro/theme/app_theme.dart';
+import 'package:pomodoro/features/pomodoro/promodor_screen.dart';
+import 'package:pomodoro/core/theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
