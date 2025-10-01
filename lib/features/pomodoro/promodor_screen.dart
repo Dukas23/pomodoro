@@ -5,6 +5,7 @@ import 'package:pomodoro/features/pomodoro/widgets/circular_progress_with_contex
 import 'package:pomodoro/core/utils/pomodoro_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:pomodoro/core/theme/theme_provider.dart';
+import 'package:pomodoro/core/theme/app_theme.dart';
 
 class PomodoroScreen extends StatefulWidget {
   const PomodoroScreen({super.key});
@@ -48,6 +49,40 @@ class PomodoroScreenState extends State<PomodoroScreen> {
       appBar: AppBar(
         title: const Text('Pomodoro'),
         actions: [
+          // Selector de colorSkin
+          PopupMenuButton<Color>(
+            icon: const Icon(Icons.color_lens),
+            tooltip: 'Cambiar color principal',
+            onSelected: (color) {
+              Provider.of<ThemeProvider>(
+                context,
+                listen: false,
+              ).setColorSkin(color);
+            },
+            itemBuilder: (context) => [
+              for (final color in allowedColorSkins)
+                PopupMenuItem<Color>(
+                  value: color,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 30,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black12),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        color.toString().split('(')[0].replaceAll('Color', ''),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
           IconButton(
             icon: Icon(
               Provider.of<ThemeProvider>(context).isDarkMode
