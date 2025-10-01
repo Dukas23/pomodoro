@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pomodoro/features/pomodoro/models/pomodoro_type.dart';
 import 'package:pomodoro/features/pomodoro/widgets/circular_progress_with_contex.dart';
 import 'package:pomodoro/core/utils/pomodoro_timer.dart';
 
