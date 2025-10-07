@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:pomodoro/domain/entities/pomodoro_type.dart';
+import 'package:pomodoro/domain/entities/pomodoro_phase.dart';
 
 class PomodoroTimer {
   PomodoroType currentType;
