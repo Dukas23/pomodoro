@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro/features/pomodoro/promodor_screen.dart';
+import 'package:pomodoro/presentation/pages/promodor_screen.dart';
 import 'package:pomodoro/core/theme/app_theme.dart';
 
 void main() {
