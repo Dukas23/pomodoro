@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pomodoro/features/pomodoro/widgets/circular_progress_with_contex.dart';
-import 'package:pomodoro/core/utils/pomodoro_timer.dart';
-import 'package:provider/provider.dart';
-import 'package:pomodoro/core/theme/theme_provider.dart';
 import 'package:pomodoro/core/theme/app_theme.dart';
+import 'package:pomodoro/core/theme/theme_provider.dart';
+import 'package:pomodoro/domain/uses_cases/pomodoro_timer.dart';
+import 'package:pomodoro/presentation/widgets/circular_progress_with_contex.dart';
+import 'package:provider/provider.dart';
 
 class PomodoroScreen extends StatefulWidget {
   const PomodoroScreen({super.key});

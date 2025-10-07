@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pomodoro/features/pomodoro/models/pomodoro_type.dart';
-import 'package:pomodoro/features/pomodoro/promodor_screen.dart';
-import 'package:pomodoro/core/utils/pomodoro_timer.dart';
+import 'package:pomodoro/domain/entities/pomodoro_phase.dart';
+import 'package:pomodoro/presentation/pages/promodor_screen.dart';
+import 'package:pomodoro/domain/uses_cases/pomodoro_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:pomodoro/features/pomodoro/widgets/circular_progress_with_contex.dart';
+import 'package:pomodoro/presentation/widgets/circular_progress_with_contex.dart';
 
 void main() {
   group('PomodoroTimer', () {
