@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pomodoro/core/theme/app_theme.dart';
+import 'package:pomodoro/core/utils/responsive.dart';
 import 'package:pomodoro/core/theme/theme_provider.dart';
 import 'package:pomodoro/domain/uses_cases/pomodoro_timer.dart';
 import 'package:pomodoro/presentation/widgets/circular_progress_with_contex.dart';
@@ -23,25 +24,23 @@ class PomodoroScreenState extends State<PomodoroScreen> {
     pomodoroTimer = PomodoroTimer();
   }
 
-  void toggleTimer() {
-    setState(() {
-      pomodoroTimer.toggle();
-      // Actualizar la UI en cada tick
-      pomodoroTimer.timer?.cancel();
-      pomodoroTimer.timer = pomodoroTimer.isActive
-          ? Timer.periodic(const Duration(seconds: 1), (t) {
-              pomodoroTimer.seconds--;
-              if (pomodoroTimer.seconds == 0) {
-                pomodoroTimer.timer?.cancel();
-                pomodoroTimer.nextState();
-                setState(() {});
-              } else {
-                setState(() {});
-              }
-            })
-          : null;
-    });
-  }
+  void toggleTimer() => setState(() {
+    pomodoroTimer.toggle();
+    // Actualizar la UI en cada tick
+    pomodoroTimer.timer?.cancel();
+    pomodoroTimer.timer = pomodoroTimer.isActive
+        ? Timer.periodic(const Duration(seconds: 1), (t) {
+            pomodoroTimer.seconds--;
+            if (pomodoroTimer.seconds == 0) {
+              pomodoroTimer.timer?.cancel();
+              pomodoroTimer.nextState();
+              setState(() {});
+            } else {
+              setState(() {});
+            }
+          })
+        : null;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,31 +94,19 @@ class PomodoroScreenState extends State<PomodoroScreen> {
           ),
         ],
       ),
-      body: Center(
+      // body:
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              pomodoroTimer.currentType.name.toUpperCase(),
-              style: const TextStyle(fontWeight: FontWeight.w900),
-            ),
-            const SizedBox(height: 20.0),
-            CircularProgressWithContex(
-              value: pomodoroTimer.seconds / 1500,
-              text: Text(
-                '${(pomodoroTimer.seconds ~/ 60).toString().padLeft(2, '0')}:${(pomodoroTimer.seconds % 60).toString().padLeft(2, '0')}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
+            if (Responsive.isDesktop(context))
+              Expanded(
+                // default flex = 1
+                // and it takes 1/6 part of the screen
+                child: Text("a"),
               ),
-              strokeWidth: 10.0,
-              size: 300.0,
-            ),
-            const SizedBox(height: 10.0),
-            FloatingActionButton(
-              onPressed: toggleTimer,
-              child: Icon(
-                pomodoroTimer.isActive ? Icons.pause : Icons.play_arrow,
-              ),
-            ),
+
+            Expanded(flex: 5, child: Text("HOla")),
           ],
         ),
       ),
