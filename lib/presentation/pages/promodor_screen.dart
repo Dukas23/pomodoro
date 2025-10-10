@@ -2,14 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pomodoro/core/theme/app_theme.dart';
-import 'package:pomodoro/core/utils/responsive.dart';
+import 'package:pomodoro/core/utils/screen_size_util.dart';
 import 'package:pomodoro/core/theme/theme_provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pomodoro/domain/entities/destination_entity.dart';
 import 'package:pomodoro/domain/uses_cases/pomodoro_timer.dart';
-import 'package:pomodoro/presentation/widgets/circular_progress_with_contex.dart';
+// ...existing code...
 import 'package:provider/provider.dart';
 
 class PomodoroScreen extends StatefulWidget {
-  const PomodoroScreen({super.key});
+  final Widget? child;
+
+  const PomodoroScreen({super.key, this.child});
 
   @override
   PomodoroScreenState createState() => PomodoroScreenState();
@@ -44,6 +48,15 @@ class PomodoroScreenState extends State<PomodoroScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final sizeUtil = ScreenSizeUtil(context);
+
+    // Compute current index from the router location (use browser URL as a reliable source)
+    final String currentLocation = Uri.base.path;
+    int currentIndex = appDestionation.indexWhere(
+      (d) => d.path == currentLocation,
+    );
+    if (currentIndex < 0) currentIndex = 0;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pomodoro'),
@@ -94,28 +107,58 @@ class PomodoroScreenState extends State<PomodoroScreen> {
           ),
         ],
       ),
-      // body:
+      // Responsive layout: NavigationRail for tablet/desktop, NavigationBar for mobile
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Row(
           children: [
-            if (Responsive.isDesktop(context))
-              Expanded(
-                // default flex = 1
-                // and it takes 1/6 part of the screen
-                child: Text("a"),
+            if (!sizeUtil.isMobileLayout)
+              NavigationRail(
+                selectedIndex: currentIndex,
+                onDestinationSelected: (idx) {
+                  final dest = appDestionation[idx];
+                  context.go(dest.path);
+                },
+                labelType: NavigationRailLabelType.all,
+                destinations: appDestionation
+                    .map(
+                      (d) => NavigationRailDestination(
+                        icon: Icon(d.icon),
+                        label: Text(d.title),
+                      ),
+                    )
+                    .toList(),
               ),
 
-            Expanded(flex: 5, child: Text("HOla")),
+            // Main content area
+            Expanded(child: widget.child ?? const SizedBox.shrink()),
           ],
         ),
       ),
+
+      bottomNavigationBar: sizeUtil.isMobileLayout
+          ? NavigationBar(
+              selectedIndex: currentIndex,
+              onDestinationSelected: (idx) {
+                final dest = appDestionation[idx];
+                context.go(dest.path);
+              },
+              destinations: appDestionation
+                  .map(
+                    (d) => NavigationDestination(
+                      icon: Icon(d.icon),
+                      label: d.title,
+                    ),
+                  )
+                  .toList(),
+            )
+          : null,
     );
   }
-
-  @override
-  void dispose() {
-    pomodoroTimer.timer?.cancel();
-    super.dispose();
-  }
 }
+
+//   @override
+//   void dispose() {
+//     pomodoroTimer.timer?.cancel();
+//     super.dispose();
+//   }
+// }
