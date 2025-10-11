@@ -16,16 +16,11 @@ class DestinationEntity {
 }
 
 List<DestinationEntity> appDestionation = [
-  
-  DestinationEntity(
-    title: "Pomodoro",
-    icon: Icons.home, 
-    path: AppRoutes.home
-    ),
+  DestinationEntity(title: "Pomodoro", icon: Icons.home, path: AppRoutes.home),
 
   DestinationEntity(
     title: "Reports",
-    icon: Icons.report,
+    icon: Icons.analytics,
     path: AppRoutes.reports,
   ),
 
