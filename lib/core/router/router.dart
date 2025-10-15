@@ -4,6 +4,7 @@ import 'package:pomodoro/core/router/app_routes.dart';
 import 'package:pomodoro/presentation/pages/home/home_screen.dart';
 import 'package:pomodoro/presentation/pages/reports/reports_screen.dart';
 import 'package:pomodoro/presentation/pages/pomodoro/pomodoro_screen.dart';
+import 'package:pomodoro/presentation/pages/settings/settings_screen.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: AppRoutes.home,
@@ -13,25 +14,28 @@ final GoRouter router = GoRouter(
         return HomeScreen(child: child);
       },
       routes: <RouteBase>[
-        // Home route (root) — required because initialLocation is AppRoutes.home ('/')
         GoRoute(
           path: AppRoutes.home,
-          builder: (BuildContext context, GoRouterState state) {
-            return PomodoroScreen();
+          pageBuilder: (BuildContext context, GoRouterState state) {
+            return const NoTransitionPage(
+              child: PomodoroScreen(),
+            );
           },
         ),
-
         GoRoute(
           path: AppRoutes.reports,
-          builder: (BuildContext context, GoRouterState state) {
-            return ReportsScreen();
+          pageBuilder: (BuildContext context, GoRouterState state) {
+            return const NoTransitionPage(
+              child: ReportsScreen(),
+            );
           },
         ),
-
         GoRoute(
           path: AppRoutes.settings,
-          builder: (BuildContext context, GoRouterState state) {
-            return const Placeholder(child: Text("Settings view"));
+          pageBuilder: (BuildContext context, GoRouterState state) {
+            return const NoTransitionPage(
+              child: SettingsScreen(),
+            );
           },
         ),
       ],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CircularProgressWithContex extends StatelessWidget {
+class CircularProgressWithContext extends StatelessWidget {
   final double value;
   final Text text;
   final double strokeWidth;
   final double size;
 
-  const CircularProgressWithContex({
+  const CircularProgressWithContext({
     super.key,
     required this.value,
     required this.text,
@@ -22,7 +22,11 @@ class CircularProgressWithContex extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CircularProgressIndicator(value: value, strokeWidth: strokeWidth),
+          CircularProgressIndicator(
+            value: value, 
+            strokeWidth: strokeWidth,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           Center(child: text),
         ],
       ),
