@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildDesktopSidebar(BuildContext context, String? currentRoute) {
     return Container(
-      width: 280,
+      width: 150,
       color: Theme.of(context).colorScheme.surfaceContainerHighest,
       child: GridView.count(
         crossAxisCount: 1,
