@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pomodoro/core/utils/screen_size_util.dart';
 import 'package:pomodoro/domain/entities/destination_entity.dart';
+import 'package:pomodoro/presentation/pages/home/widgets/Menu_mobile.dart';
 
 // Define your app destinations here
 final List<DestinationEntity> appDestination = [
@@ -20,37 +21,39 @@ class HomeScreen extends StatelessWidget {
     final sizeUtil = ScreenSizeUtil(context);
     final currentRoute = ModalRoute.of(context)?.settings.name;
 
-    // Para pantallas grandes, usamos GridView con sidebar + contenido
+    // Para pantallas grandes, usamos un Row para el sidebar + contenido
     if (sizeUtil.isLargeScreen) {
       return Scaffold(
-        body: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 0.3, // Sidebar más angosto
+        body: Row(
+          // <-- Usamos Row para el diseño horizontal
           children: [
-            // Sidebar Navigation
-            _buildDesktopSidebar(context, currentRoute),
+            // 1. Sidebar Navigation (Ancho fijo o Flexible/Expanded)
+            SizedBox(
+              width: 250, // <-- Define un ancho fijo para el sidebar
+              child: _buildDesktopSidebar(context, currentRoute),
+            ),
 
-            // Main Content Area
-            Container(
-              constraints: const BoxConstraints(maxWidth: 1200),
-              child: child,
+            // 2. Main Content Area (Ocupa el resto del espacio disponible)
+            Expanded(
+              // <-- Usa Expanded para que ocupe el espacio restante
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 1200),
+                child: child,
+              ),
             ),
           ],
         ),
       );
     } else {
-      // Para mobile/tablet, GridView con contenido principal + bottom nav
+      // Para mobile/tablet, mantenemos el Scaffold con bottom nav
       return Scaffold(
-        appBar: AppBar(),
-        bottomNavigationBar: _buildMobileBottomNav(context, currentRoute),
+        // Remueve el AppBar() si quieres el diseño de la imagen
+        // appBar: AppBar(),
+        bottomNavigationBar: MenuMobile(currentRoute: currentRoute),
         body: SafeArea(
-          child: GridView.count(
-            crossAxisCount: 1,
-            children: [
-              // Main Content
-              child,
-            ],
-          ),
+          // Ya no necesitamos GridView.count(crossAxisCount: 1) aquí,
+          // el child (el PomodoroScreen, etc.) es el contenido principal
+          child: child,
         ),
       );
     }
@@ -84,18 +87,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMobileBottomNav(BuildContext context, String? currentRoute) {
-    return BottomNavigationBar(
-      items: appDestination.map((destination) {
-        return BottomNavigationBarItem(
-          icon: Icon(destination.icon),
-          label: destination.title,
-        );
-      }).toList(),
-      currentIndex: _getCurrentIndex(currentRoute),
-      onTap: (index) => _onNavItemTapped(context, index),
-    );
-  }
 
   Widget _buildNavItem(
     BuildContext context,
