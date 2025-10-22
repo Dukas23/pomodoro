@@ -115,7 +115,7 @@ class PomodoroScreen extends StatelessWidget {
         // 1. Definimos el widget del Círculo de Progreso
         final progressCircle = Container(
           alignment: Alignment.center,
-          padding: isWideScreen ? const EdgeInsets.only(right: 20) : null,
+          padding: isWideScreen ? const EdgeInsets.all(20) : null,
           child: CircularProgressWithContext(
             value: 1.0 - progressValue,
             strokeWidth: 15,
@@ -133,7 +133,7 @@ class PomodoroScreen extends StatelessWidget {
         // 2. Definimos el widget de la Sección de Controles
         final controlsSection = Container(
           alignment: Alignment.center,
-          padding: isWideScreen ? const EdgeInsets.only(left: 20) : null,
+          padding: isWideScreen ? const EdgeInsets.all(20) : null,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -203,7 +203,7 @@ class PomodoroScreen extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 progressCircle, // En móvil no necesitan Expanded si quieres que se dimensionen automáticamente
                 const SizedBox(height: 40), // Espacio entre elementos en móvil
