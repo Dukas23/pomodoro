@@ -24,13 +24,13 @@ class HomeScreen extends StatelessWidget {
     if (sizeUtil.isLargeScreen) {
       return Scaffold(
         body: Row(
-          // <-- Usamos Row para el diseño horizontal
           children: [
             // 1. Sidebar Navigation (Ancho fijo o Flexible/Expanded)
             SizedBox(
-              width: 250, // <-- Define un ancho fijo para el sidebar
+              width: 100, // <-- Define un ancho fijo para el sidebar
               child: MyNavigationRail(),
             ),
+            const VerticalDivider(thickness: 1, width: 1),
 
             // 2. Main Content Area (Ocupa el resto del espacio disponible)
             Expanded(
