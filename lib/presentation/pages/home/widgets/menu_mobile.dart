@@ -1,37 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pomodoro/presentation/pages/home/home_screen.dart';
+import 'package:pomodoro/domain/entities/destination_entity.dart';
 
-class MenuMobile extends StatelessWidget {
-  final String? currentRoute;
-
-  const MenuMobile({super.key, this.currentRoute});
+class MenuMobile extends StatefulWidget {
+  const MenuMobile({super.key});
 
   @override
+  State<MenuMobile> createState() => _MenuMobileState();
+}
+
+class _MenuMobileState extends State<MenuMobile> {
+  int currentPageIndex = 0;
+  @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: appDestination.map((destination) {
-        return BottomNavigationBarItem(
+    return NavigationBar(
+      onDestinationSelected: (int index) {
+        setState(() {
+          currentPageIndex = index;
+        });
+
+        final String routePath = appDestinations[index].path;
+        _navigateTo(context, routePath);
+      },
+      selectedIndex: currentPageIndex,
+      destinations: appDestinations.map((destination) {
+        return NavigationDestination(
           icon: Icon(destination.icon),
           label: destination.title,
         );
       }).toList(),
-      currentIndex: _getCurrentIndex(currentRoute),
-      onTap: (index) => _onNavItemTapped(context, index),
     );
-  }
-
-  int _getCurrentIndex(String? currentRoute) {
-    for (int i = 0; i < appDestination.length; i++) {
-      if (appDestination[i].path == currentRoute) {
-        return i;
-      }
-    }
-    return 0;
-  }
-
-  void _onNavItemTapped(BuildContext context, int index) {
-    _navigateTo(context, appDestination[index].path);
   }
 
   void _navigateTo(BuildContext context, String route) {

@@ -1,11 +1,10 @@
+// lib/domain/entities/destination_entity.dart
 import 'package:flutter/material.dart';
 import 'package:pomodoro/core/router/app_routes.dart';
 
 class DestinationEntity {
   final String title;
-
   final IconData icon;
-
   final String path;
 
   DestinationEntity({
@@ -15,15 +14,18 @@ class DestinationEntity {
   });
 }
 
-List<DestinationEntity> appDestionation = [
-  DestinationEntity(title: "Pomodoro", icon: Icons.home, path: AppRoutes.home),
-
+// ⚠️ Usamos el nombre corregido y exportamos la lista.
+final List<DestinationEntity> appDestinations = [
+  DestinationEntity(
+    title: "Pomodoro",
+    icon: Icons.schedule,
+    path: AppRoutes.home,
+  ), // Icono más representativo
   DestinationEntity(
     title: "Reports",
     icon: Icons.analytics,
     path: AppRoutes.reports,
   ),
-
   DestinationEntity(
     title: "Settings",
     icon: Icons.settings,
