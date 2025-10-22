@@ -35,9 +35,11 @@ class HomeScreen extends StatelessWidget {
             // 2. Main Content Area (Ocupa el resto del espacio disponible)
             Expanded(
               // <-- Usa Expanded para que ocupe el espacio restante
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 1200),
-                child: child,
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 1200),
+                  child: child,
+                ),
               ),
             ),
           ],

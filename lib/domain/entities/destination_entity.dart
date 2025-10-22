@@ -22,11 +22,6 @@ final List<DestinationEntity> appDestinations = [
     path: AppRoutes.home,
   ), // Icono más representativo
   DestinationEntity(
-    title: "Reports",
-    icon: Icons.analytics,
-    path: AppRoutes.reports,
-  ),
-  DestinationEntity(
     title: "Settings",
     icon: Icons.settings,
     path: AppRoutes.settings,
